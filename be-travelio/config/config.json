@@ -1,10 +1,10 @@
 
-  
-  {
+{
     "user": "postgres",
-      "password": "postgres",
-      "database": "test-travelio",
-      "host": "127.0.0.1",
-      "dialect": "postgres",
-      "port": 5433
-  }
+    "password": "Meixiang_20",
+    "database": "postgres",
+    "host": "db.dcbftuuwzmgpsrxpyjck.supabase.co",
+    "dialect": "postgres",
+    "port": 5432,
+    "use_env_variable": "travelio"
+}
