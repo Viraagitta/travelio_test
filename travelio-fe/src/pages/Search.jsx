@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Search.css';
-import searchBooks from '../store/book';
+import {searchBooks} from '../store/book';
 import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
@@ -20,8 +20,8 @@ const Search = () => {
   const handleSearchBooks = async (event) => {
     const { data, loading, error } = await searchBooks(keyword);
     if (data.data.length) {
-      console.log(data.data, '<<ini data di search')
-      navigate('/books', { state: { searchData: data.data } });
+      console.log(data.data, keyword, '<<ini data di search')
+      navigate('/books', { state: { searchData: data.data, keyword } });
     }
   };
 
@@ -38,7 +38,7 @@ const Search = () => {
                   value={keyword}
                   onChange={handleKeywordChange} 
                   onKeyDown={handleKeyDown}
-                  placeholder="Title book in english" />
+                  placeholder="Search Book Title" />
                   <span onClick={handleSearchBooks} className="icon is-medium is-right has-text-danger is-clickable">
                     <i className="fas fa-search" ></i>
                   </span>

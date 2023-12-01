@@ -5,11 +5,22 @@ import axios from 'axios';
 const searchBooks = async (keyword) => {
     try {
       const response = await axios.get(`https://travelio-be-production.up.railway.app/search?keyword=${keyword}`);
-        console.log(response.data, '<ini hasil book')
+
       return { data: response.data, error: null };
     } catch (error) {
       return { data: null, error: error.message || 'An error occurred' };
     }
   };
   
-  export default searchBooks;
+  const addWishlist = async (data) => {
+    try {
+      const url = 'https://travelio-be-production.up.railway.app/wishlist';
+      const response = await axios.post(url, data);
+  
+      console.log('Wishlist added successfully:', response.data);
+    } catch (error) {
+      console.error('Error adding wishlist:', error.message);
+    }
+  };
+  
+  export { searchBooks, addWishlist };
