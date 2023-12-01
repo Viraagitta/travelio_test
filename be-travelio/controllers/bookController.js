@@ -39,11 +39,11 @@ const searchBooks = async (req, res) => {
     };
   
 
-const getDatabaseBooks = async (req, res) => {
+const getWishlistBooks = async (req, res) => {
   const client = await pool.connect();
 
   try {
-    const result = await client.query('SELECT * FROM books');
+    const result = await client.query('SELECT * FROM wishlist');
     const databaseBooks = result.rows;
 
     res.status(200).json({
@@ -86,6 +86,6 @@ const createWishlist = async (req, res) => {
 
 module.exports = {
   searchBooks,
-  getDatabaseBooks,
+  getWishlistBooks,
   createWishlist,
 };
