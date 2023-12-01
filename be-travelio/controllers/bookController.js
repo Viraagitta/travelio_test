@@ -4,31 +4,9 @@ let axios = require("axios");
 
 const pool = new Pool(config);
 
-const chunkArray = (array, chunkSize) => {
-    const result = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      result.push(array.slice(i, i + chunkSize));
-    }
-    return result;
-  };
-  
-  const arrayToSqlInsert = (array, fields) => {
-    const values = array.map((item) => {
-      const fieldValues = fields.map((field) => {
-        const value = item[field];
-        if (typeof value === 'string') {
-          return `'${value}'`;
-        }
-        return value;
-      });
-      return `(${fieldValues.join(', ')})`;
-    });
-    return values.join(', ');
-  };
-
 const searchBooks = async (req, res) => {
     const client = await pool.connect();
-  
+    console.time('testing')
     try {
         const { keyword } = req.query;
         const { data: response } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${keyword}`);
@@ -46,33 +24,17 @@ const searchBooks = async (req, res) => {
           };
         });
     
-        const chunks = chunkArray(booksData, 50); 
-    
-        const insertedBooks = [];
-    
-        for (const chunk of chunks) {
-          const values = arrayToSqlInsert(chunk, ['id', 'title', 'thumbnail', 'author', 'rating']);
-          const query = {
-            text: `INSERT INTO books (id, title, thumbnail, author, rating) VALUES ${values} ON CONFLICT (id) DO NOTHING;`,
-          };
-    
-          try {
-            await client.query(query);
-            insertedBooks.push(...chunk);
-          } catch (insertError) {
-            console.error(`Error inserting books: ${insertError.message}`);
-          }
-        }
-        console.log(`Book inserted Successfully` + insertedBooks.length);
-    
         res.status(200).json({
-          data: insertedBooks,
+          data: booksData,
         });
+        console.log(`Book inserted Successfully ${booksData}` + booksData.length);
+    
       } catch (error) {
         console.error(`Error in searchBooks: ${error.message}`);
         res.status(500).json({ error: 'Internal Server Error', message: error.message });
       } finally {
         client.release(); 
+        console.timeEnd('testing')
       }
     };
   
@@ -92,7 +54,6 @@ const getDatabaseBooks = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error', message: error.message });
   } finally {
     client.release(); 
-
   }
 };
 
