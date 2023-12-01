@@ -12,14 +12,14 @@ const Books = () => {
         navigate('/')
     };
     const handleWishlistPage = async (event) => {
-      navigate('/wishlist')
+      navigate('/wishlists')
   };
 
   return (
     <div className='custom-bg'>
       <div className='mx-6 py-5'>
         <div className='has-icons-right'>
-          <h2 className="title is-4">KEYWORD: {keyword}</h2>
+          <h2 className="title is-4 is-text-overflow custom-title">KEYWORD: {keyword}</h2>
           <div
             className={`mt-4 is-clickable is-right has-text-dark home-icon hoverable hoverable-custom`}
             onClick={handleHomeSearch}

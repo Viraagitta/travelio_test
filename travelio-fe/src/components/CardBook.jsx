@@ -41,7 +41,7 @@ const CardBooks = ({ title, author, rating, thumbnail, data }) => {
   };
 
   return (
-    <div className="card height-card my-4 mx-2">
+    <div className="card height-card my-4 mx-2 custom-box">
       <div className="card-image">
         <figure className="image img-height">
           <img src={thumbnail} alt="Book Cover" />
@@ -49,13 +49,13 @@ const CardBooks = ({ title, author, rating, thumbnail, data }) => {
       </div>
       <div className="card-content has-icons-right">
         <p className="title is-5 is-text-overflow mb-2">{title}</p>
-        <p className="is-7 content is-truncated is-text-overflow mb-8">{author}</p>
+        <p className="is-7 content is-truncated is-text-overflow mb-4">{author}</p>
         {rating ?
             <div ref={raterRef}></div>
             :
             <div className='content has-text-grey is-size-7'>No Ratings</div>
         }
-      <div className={`mt-4 is-clickable is-right heart-icon m-3 ${isHeartClicked ? 'has-text-danger' : 'has-text-grey'}`}  onClick={handleHeartClick} >
+      <div className={` is-clickable is-right heart-icon m-3 ${isHeartClicked ? 'has-text-danger' : 'has-text-grey'}`}  onClick={handleHeartClick} >
           <i className={`fas fa-heart is-size-4`}></i>
         </div>
       </div>

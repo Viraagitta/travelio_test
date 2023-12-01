@@ -11,6 +11,16 @@ const searchBooks = async (keyword) => {
       return { data: null, error: error.message || 'An error occurred' };
     }
   };
+
+  const wishlistBooks = async (keyword) => {
+    try {
+      const response = await axios.get(`https://travelio-be-production.up.railway.app/books`);
+    console.log(response.data , '<<ini apa')
+      return { data: response.data, error: null };
+    } catch (error) {
+      return { data: null, error: error.message || 'An error occurred' };
+    }
+  };
   
   const addWishlist = async (data) => {
     try {
@@ -23,4 +33,4 @@ const searchBooks = async (keyword) => {
     }
   };
   
-  export { searchBooks, addWishlist };
+  export { searchBooks, addWishlist, wishlistBooks };
